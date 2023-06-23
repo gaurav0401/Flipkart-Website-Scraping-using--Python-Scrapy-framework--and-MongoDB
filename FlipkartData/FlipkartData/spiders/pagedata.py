@@ -9,6 +9,7 @@ client = MongoClient("mongodb+srv://test1:test12345678@cluster0.7nr31nz.mongodb.
 
 db=client.flipkart
 
+
 def insert_data(page , title , price , ratings):
     collections=db[page]
     data={
@@ -39,29 +40,30 @@ class PagedataSpider(scrapy.Spider):
         filename = f"pagedata-{page}.html"
          
          #For storing data as a FILE
+        print("\n\nWeb Scraping using Python ")
+        print("\n1.Save data as a File")
+        print("\n2.Save data as a document in Database")
+        ch=int(input("\nHow do you want scraped data?:"))
+        if (ch==1):
+            Path(filename).write_bytes(response.body)
+            self.log(f"Saved file {filename}")
 
-        Path(filename).write_bytes(response.body)
-        self.log(f"Saved file {filename}")
 
+        elif (ch==2):
 
-
-        p_title=response.css('._4rR01T::text').getall()
-        print(p_title)
-        p_prices = response.css('._30jeq3._1_WHN1::text').getall()
-        print(p_prices)
-        p_ratings=response.css('._2_R_DZ span span:nth-of-type(1)::text').getall()
-        print(p_ratings)
-
-        
-
-        #for inserting data in mongoDB
-
-        for title , price , rating in zip(p_title , p_prices , p_ratings):
-            res=insert_data(page , title , price , rating)
-
-            print("inserting data into a database.....")
-        else:
-            print("Data has been inserted  to the database successfully....")
+            p_title=response.css('._4rR01T::text').getall()
+            print(p_title)
+            p_prices = response.css('._30jeq3._1_WHN1::text').getall()
+            print(p_prices)
+            p_ratings=response.css('._2_R_DZ span span:nth-of-type(1)::text').getall()
+            print(p_ratings)
+            #for inserting data in mongoDB
+            for title , price , rating in zip(p_title , p_prices , p_ratings):
+                res=insert_data(page , title , price , rating)
+                print("inserting data into a database.....")
+            else:
+                 print("Data has been inserted  to the database successfully....")
+     
            
             
 
