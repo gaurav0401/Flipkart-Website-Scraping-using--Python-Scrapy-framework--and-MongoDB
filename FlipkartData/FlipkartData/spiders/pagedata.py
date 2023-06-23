@@ -39,12 +39,14 @@ class PagedataSpider(scrapy.Spider):
         page = response.url.split("/")[-2]
         filename = f"pagedata-{page}.html"
          
-         #For storing data as a FILE
+        
         print("\n\nWeb Scraping using Python ")
         print("\n1.Save data as a File")
         print("\n2.Save data as a document in Database")
         ch=int(input("\nHow do you want scraped data?:"))
         if (ch==1):
+
+             #For storing data as a FILE
             Path(filename).write_bytes(response.body)
             self.log(f"Saved file {filename}")
 
