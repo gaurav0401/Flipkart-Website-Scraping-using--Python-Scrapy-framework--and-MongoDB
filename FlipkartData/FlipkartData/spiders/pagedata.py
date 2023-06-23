@@ -1,6 +1,6 @@
 import scrapy
 
-from pymongo import MongoClient 
+from pymongo import MongoClient
 
 from pathlib import Path
 
